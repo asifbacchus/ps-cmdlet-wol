@@ -10,6 +10,7 @@ function Send-MagicPacket
         $MacAddress,
 
     # Broadcast IP address (default: all subnets --> 255.255.255.255)
+        [Alias("IP","Address")]
         [Parameter()]
         [IPAddress]
         $BroadcastIP = [System.Net.IPAddress]::Broadcast,
