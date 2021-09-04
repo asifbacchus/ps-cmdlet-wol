@@ -3,7 +3,7 @@
 Broadcast one or more "magic packets" across a subnet to wake-up one or more target computers.
 
 .DESCRIPTION
-Sends a configurable number of "magic packets" per supplied MAC address as a broadcast over the subnet using a specified UDP port. MAC addresses can be supplied directly or via the pipeline either with or without explicitly specifying a parameter. The broadcast address and UDP port can be specified via parameters.
+Sends two (2) "magic packets" spaced one (1) second apart per supplied MAC address as a broadcast over the subnet using a specified UDP port. MAC addresses can be supplied directly or via the pipeline either with or without explicitly specifying a parameter. The broadcast address and UDP port can be specified via parameters.
 
 Note: You must specify the '-Verbose' parameter to see output for successfully sent packets.
 
@@ -101,10 +101,12 @@ function Send-MagicPacket
                 continue
             }
 
-            # broadcast magic packet
+            # broadcast magic packets
             try
             {
                 $UdpClient.Connect($BroadcastIP, $Port)
+                $UdpClient.Send($magicPacket, $magicPacket.Length) | Out-Null
+                Start-Sleep -Seconds 1
                 $UdpClient.Send($magicPacket, $magicPacket.Length) | Out-Null
                 Write-Verbose "Sent magic packet: Broadcast $addr over $BroadcastIP on port $Port (UDP)"
             }
