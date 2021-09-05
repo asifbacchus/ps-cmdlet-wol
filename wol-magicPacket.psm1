@@ -11,7 +11,7 @@ Note: You must specify the '-Verbose' parameter to see output for successfully s
 Array of MAC addresses for which to construct magic packets. The array should be provided in standard comma-separated string format ('1a:2a:3a:4a:5a:aa', '1b:2b:3b:4b:5b:bb', ...). You may use either a colon (:) or a hyphen (-) to delimit each hex value-pair in the MAC address. You may supply this array either directly or via the pipline.
 
 .PARAMETER BroadcastIP
-The address to which magic packets should be sent in order for them to be broadcast across the subnet. By default this is 255.255.255.255 however, many routers block such global broadcasts. Therefore, it is suggested to use the subnet-specific broadcast address (e.g. 192.168.1.255). You may also use IP6 addresses if you prefer.
+The address to which magic packets should be sent in order for them to be broadcast across the subnet. By default this is 255.255.255.255 however, many routers block such global broadcasts. Therefore, it is suggested to use the subnet-specific broadcast address (e.g. 192.168.1.255). You may also use IP6 multicast addresses (ff02::1 may work in your environment) if you prefer.
 
 .PARAMETER Port
 The UDP port that should be used when sending the broadcast. By default this is port 7 (echo). Port 9 (discard) is also a common port.
