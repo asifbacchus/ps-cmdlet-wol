@@ -3,6 +3,19 @@
 PowerShell cmdlet (module/function) to send a *magic packet* based on provided MAC address(es). Comment-based help is
 included in the source-code: `Get-Help Send-MagicPacket -Full`
 
+## Contents
+
+<!-- toc -->
+
+- [Installation and verification](#installation-and-verification)
+- [Overview](#overview)
+- [Broadcast considerations](#broadcast-considerations)
+- [Pipeline](#pipeline)
+- [Module or Function](#module-or-function)
+- [Feedback](#feedback)
+
+<!-- tocstop -->
+
 ## Installation and verification
 
 Downloads are available
