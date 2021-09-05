@@ -125,3 +125,5 @@ function Send-MagicPacket
         $UdpClient.Dispose()
     }
 }
+
+Export-ModuleMember -Function Send-MagicPacket
