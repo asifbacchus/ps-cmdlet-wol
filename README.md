@@ -8,6 +8,7 @@ included in the source-code: `Get-Help Send-MagicPacket -Full`
 <!-- toc -->
 
 - [Installation and verification](#installation-and-verification)
+    * [Example: Auto-load for current user](#example-auto-load-for-current-user)
 - [Overview](#overview)
 - [Broadcast considerations](#broadcast-considerations)
 - [Pipeline](#pipeline)
@@ -18,12 +19,53 @@ included in the source-code: `Get-Help Send-MagicPacket -Full`
 
 ## Installation and verification
 
-Downloads are available
-via [my git server (https://git.asifbacchus.dev/asif/ps-cmdlet-wol)](https://git.asifbacchus.dev/asif/ps-cmdlet-wol)
-and [GitHub (https://github.com/asifbacchus/ps-cmdlet-wol)](https://github.com/asifbacchus/ps-cmdlet-wol). You may
-verify the cmdlet's integrity using [CodeNotary](https://codenotary.io) via `vcn authenticate` or by dropping the
-downloaded script onto their verification webpage at [https://verify.codenotary.io](https://verify.codenotary.io).
-Please always try to verify downloaded scripts and software regardless of the source!
+Downloads are available via [my git server](https://git.asifbacchus.dev/asif/ps-cmdlet-wol/releases/latest)
+and [GitHub](https://github.com/asifbacchus/ps-cmdlet-wol/releases/latest). You may verify the cmdlet's integrity
+using [CodeNotary](https://codenotary.io) via `vcn authenticate` or by dropping the downloaded script and/or manifest
+onto their verification webpage at [https://verify.codenotary.io](https://verify.codenotary.io). Please always try to
+verify downloaded scripts and software regardless of the source!
+
+If you are integrating this function with your own project or want to manually load the module as needed, then save the
+module and manifest file wherever it is convenient for you. If you want to auto-load this function so it is available
+automatically in any PowerShell session then you *must* extract it to a directory named **wol-magicPacket** somewhere
+defined in your `PSModulePath` depending on your use-case. More information can be found directly from
+Microsoft [here](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_modules?view=powershell-7.1#short-description)
+.
+
+### Example: Auto-load for current user
+
+Here's a complete example assuming I want the module automatically available for all sessions running under my user
+account:
+
+```powershell
+# download version 1.1
+Invoke-WebRequest -Uri https://git.asifbacchus.dev/asif/ps-cmdlet-wol/archive/v1.1.zip -OutFile "$Env:DOWNLOADS\ps-cmdlet-wol.zip"
+
+# Get PSModulePath
+# You should see a user-level modules path in the form of either:
+#  C:\Users\Username\Documents\WindowsPowerShell\Modules  -OR-
+#  C:\Users\Username\Documents\PowerShell\Modules
+$Env:PSModulePath
+
+# change directory to the appropriate path from above
+Set-Location "C:\Users\Username\Documents\WindowsPowerShell\Modules"
+
+# extract files and rename directory
+Expand-Archive -Path "$Env:DOWNLOADS\ps-cmdlet-wol.zip" -DestinationPath .\
+Rename-Item -Path ps-cmdlet-wol -NewName wol-magicPacket
+
+# confirm: you should see a directory named 'wol-magicPacket'
+gci
+
+# confirm: you should see the manifest and module within the wol-magicPacket folder
+gci .\wol-magicPacket
+```
+
+Now, close and re-open PowerShell and the `Send-MagicPacket` function should be available:
+
+```powershell
+Get-Command Send-MagicPacket
+```
 
 ## Overview
 
