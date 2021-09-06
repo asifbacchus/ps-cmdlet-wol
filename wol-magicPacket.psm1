@@ -50,7 +50,6 @@ function Send-MagicPacket
                 ValueFromPipelineByPropertyName,
                 HelpMessage = "Please provide one or more MAC addresses. You may use a colon (:) or a hypen (-) to separate hex values."
         )]
-        [ValidatePattern('^([0-9A-F]{2}[:-]){5}([0-9A-F]{2})$')]
         [String[]]
         $MacAddress,
 
@@ -83,6 +82,13 @@ function Send-MagicPacket
     {
         foreach ($addr in $MacAddress)
         {
+            # validate MAC address format or write error and continue
+            if (!($addr -match '^([0-9A-F]{2}[:-]){5}([0-9A-F]{2})$'))
+            {
+                Write-Error "Invalid MAC address: $addr"
+                continue
+            }
+
             # convert MAC address to magic packet
             try
             {
@@ -97,7 +103,7 @@ function Send-MagicPacket
             }
             catch
             {
-                Write-Warning "Unable to process MAC address: $thisMacAddress"
+                Write-Error "Unable to process MAC address: $thisMacAddress"
                 continue
             }
 
@@ -112,7 +118,7 @@ function Send-MagicPacket
             }
             catch
             {
-                Write-Warning "Unable to send magic packet for '$addr'"
+                Write-Error "Unable to send magic packet for '$addr'"
                 continue
             }
         }
