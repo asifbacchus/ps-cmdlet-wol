@@ -38,8 +38,8 @@ Here's a complete example assuming I want the module automatically available for
 account:
 
 ```powershell
-# download version 1.1
-Invoke-WebRequest -Uri https://git.asifbacchus.dev/asif/ps-cmdlet-wol/archive/v1.1.zip -OutFile "$Env:DOWNLOADS\ps-cmdlet-wol.zip"
+# download version 2.0
+Invoke-WebRequest -Uri https://git.asifbacchus.dev/asif/ps-cmdlet-wol/archive/v2.0.zip -OutFile "$Env:DOWNLOADS\ps-cmdlet-wol.zip"
 
 # Get PSModulePath
 # You should see a user-level modules path in the form of either:
